@@ -3,6 +3,9 @@
 
 # import the necessary packages
 import requests
+from datetime import datetime
+
+print("simple_request Start",datetime.now())
 
 # initialize the Keras REST API endpoint URL along with the input
 # image path
@@ -13,8 +16,12 @@ IMAGE_PATH = "dog.jpg"
 image = open(IMAGE_PATH, "rb").read()
 payload = {"image": image}
 
+print("simple_request Image prepared",datetime.now())
+
 # submit the request
 r = requests.post(KERAS_REST_API_URL, files=payload).json()
+
+print("simple_request Request send",datetime.now())
 
 # ensure the request was sucessful
 if r["success"]:
@@ -22,7 +29,8 @@ if r["success"]:
 	for (i, result) in enumerate(r["predictions"]):
 		print("{}. {}: {:.4f}".format(i + 1, result["label"],
 			result["probability"]))
-
 # otherwise, the request failed
 else:
 	print("Request failed")
+    
+print("simple_request Completed",datetime.now())
